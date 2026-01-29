@@ -5,6 +5,10 @@ build/
 !**/src/test/**/build/
 .kotlin
 
+# Fichiers système Windows
+desktop.ini
+Thumbs.db
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml

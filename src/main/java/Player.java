@@ -7,9 +7,10 @@
 public class Player {
     private final String name;
     private int score;
+    private static int count = 0;
 
     /**
-     * Player constructor
+     * Player constructor with parameter
      * Score = 0 by default
      *
      * @param name The name of the player
@@ -17,6 +18,22 @@ public class Player {
     public Player(String name) {
         this.name = name;
         score = 0;
+        count++;
+    }
+
+    /**
+     * Default Player constructor
+     * Score = 0 by default
+     * name = PlayerN by default
+     */
+    public Player() {
+        this.name = "Player" + (count + 1);
+        score = 0;
+        count++;
+    }
+
+    public int getCount(){
+        return count;
     }
 
     /**
@@ -62,26 +79,8 @@ public class Player {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
         Player other = (Player) obj;
         return this.name.equalsIgnoreCase(other.name);
     }
-
-
-    public static void main(String[] args) {
-        Player p1 = new Player("Alice");
-        Player p2 = new Player("Bob");
-
-        System.out.println(p1);
-        System.out.println(p2);
-
-        p1.updateScore(7);
-        p2.updateScore(-9);
-
-        System.out.println(p1);
-        System.out.println(p2);
-
-        System.out.print(p1.equals("Alice"));
-    }
-
 }

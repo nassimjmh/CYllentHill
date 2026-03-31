@@ -1,4 +1,5 @@
 package cyllenthill.world;
 
-public class Direction {
+public enum Direction {
+    HAUT, BAS, GAUCHE, DROITE;
 }

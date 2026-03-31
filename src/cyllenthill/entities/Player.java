@@ -9,6 +9,9 @@ public class Player {
     private final String name;
     private int score;
     private static int count = 0;
+    private int xRow;
+    private int yCol;
+    private int health;
 
     /**
      * Player constructor with parameter
@@ -19,6 +22,7 @@ public class Player {
     public Player(String name) {
         this.name = name;
         this.score = 0;
+        this.health = 5;
         count++;
     }
 
@@ -55,6 +59,18 @@ public class Player {
         return score;
     }
 
+    public int getxRow(){
+        return xRow;
+    }
+
+    public int getyCol(){
+        return yCol;
+    }
+
+    public int getHealth(){
+        return health;
+    }
+
     /**
      * Cannot go negative
      * @param delta point to add or remove
@@ -64,13 +80,21 @@ public class Player {
         this.score = Math.max(this.score + delta, 0); // score >= 0
     }
 
+    public void setxRow(int row){
+        this.xRow = row;
+    }
+
+    public void setyCol(int col){
+        this.yCol = col;
+    }
+
     /**
      * Format : *Name* : *Score* pt(s)
      * @return Formatted String
      */
     @Override
     public String toString() {
-        return this.getName() + /* " " + "❤️".repeat(Math.min(5, Math.max(0, getHealth()))) + */" : " + this.getScore() + " pt" + (this.getScore() > 1 ? "s" : "") + " (" + /*this.getxRow() + ", " + this.getyCol() + */").";    }
+        return this.getName() + " " + "❤️".repeat(Math.min(5, Math.max(0, getHealth()))) + " : " + this.getScore() + " pt" + (this.getScore() > 1 ? "s" : "") + " (" + this.getxRow() + ", " + this.getyCol() + ").";    }
 
     /**
      * Compare only names ignoring case

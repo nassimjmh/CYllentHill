@@ -12,22 +12,30 @@ public class Main {
 
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.err.println("Utilisation : java Main niveau.txt");
+            System.err.println("Utilisation : java Main level1.txt ... ");
             return;
         }
-        String path = args[0];
         Scanner scanner = new Scanner(System.in);
         boolean globalRunning = true;
+        int i = 0;
+
+        System.out.println("Saisir le nom du joueur : ");
+        String name = scanner.nextLine();
+        Player p1 = new Player(name);
+
         while (globalRunning) {
+            if (i >= args.length){
+                System.out.println("Fin du jeu.");
+                break;
+            }
+
             try {
-                Player p1 = new Player("Nassim");
-                Level lvl = new Level(path);
+                Level lvl = new Level(args[i]);
                 p1.setPlace(5, 5);
                 lvl.placePlayer(p1, p1.getPlaceX(), p1.getPlaceY());
                 boolean playing = true;
 
                 while (playing) {
-
                     System.out.println(lvl);
                     System.out.println(lvl.getPlayer());
                     System.out.print("Action (Z/Q/S/D pour bouger, X pour quitter) : ");
@@ -37,7 +45,7 @@ public class Main {
 
                     char action = input.charAt(0);
 
-                    if (action=='X'){
+                    if (action == 'X') {
                         playing = false;
                         globalRunning = false;
                         break;
@@ -52,6 +60,7 @@ public class Main {
                     if (lvl.getCoins() == 0) {
                         System.out.println(lvl);
                         System.out.println("NIVEAU TERMINE");
+                        i++;
                         playing = false;
                     }
                     if (p1.getHealth() == 0) {
@@ -59,16 +68,19 @@ public class Main {
                         playing = false;
                     }
                 }
-                if (globalRunning){
+                if (globalRunning && p1.getHealth()==0) {
                     System.out.println("Voulez vous rejouer ? OUI : O (c la lettre pas un zéro^^)");
                     String replay = scanner.nextLine().toUpperCase();
                     if (!replay.equals("O")) {
                         globalRunning = false;
                         System.out.println("Merci d'avoir joué !");
+                    } else{
+                        i = 0;
+                        p1 = new Player(name);
                     }
                 }
             } catch (IOException e) {
-                System.err.println("Erreur : Impossible de lire le fichier '" + path + "'.");
+                System.err.println("Erreur : Impossible de lire le fichier " + args[i] + " .");
                 return;
             }
         }

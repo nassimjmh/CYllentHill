@@ -108,6 +108,7 @@ public class Level {
             if (matrix[newRow][newCol].gethasCoin()){
                 player.setScore(10);
                 updateCoins(-1);
+                matrix[newRow][newCol].setHasCoin(false);
             }
             if (matrix[newRow][newCol].getType() == CellType.PIEGE){
                 player.setHealth(-2);
@@ -115,9 +116,6 @@ public class Level {
                 newRow = player.getPlaceX();
                 newCol = player.getPlaceY();
             }
-
-
-            matrix[player.getxRow()][player.getyCol()].setType(CellType.VIDE);
             player.setxRow(newRow);
             player.setyCol(newCol);
         }

@@ -21,6 +21,10 @@ public class Cell {
         return this.type;
     }
 
+    public void setHasCoin(boolean hasCoin){
+        this.hasCoin = hasCoin;
+    }
+
     public void setType(CellType type){
         this.type = type;
     }

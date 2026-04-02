@@ -114,7 +114,8 @@ public class Player {
      */
     @Override
     public String toString() {
-        return this.getName() + " " + "❤️".repeat(Math.min(5, Math.max(0, getHealth()))) + " : " + this.getScore() + " pt" + (this.getScore() > 1 ? "s" : "") + " (" + this.getxRow() + ", " + this.getyCol() + ").";    }
+        return "👤 " + this.getName() + " | " + "❤️".repeat(Math.min(5, Math.max(0, getHealth()))) + " | 🏆 " + this.getScore() + " pt" + (this.getScore() > 1 ? "s" : "") + " | 📍 (" + this.getxRow() + ", " + this.getyCol() + ")";
+    }
 
     /**
      * Compare only names ignoring case

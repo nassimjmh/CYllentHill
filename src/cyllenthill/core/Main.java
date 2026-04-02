@@ -12,20 +12,22 @@ public class Main {
 
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.err.println("Utilisation : java Main level1.txt ... ");
+            System.err.println("[!] ERREUR : Utilisation attendue -> java Main level1.txt ...");
             return;
         }
         Scanner scanner = new Scanner(System.in);
         boolean globalRunning = true;
         int i = 0;
 
-        System.out.println("Saisir le nom du joueur : ");
+        System.out.print(">>> Saisissez le nom du joueur : ");
         String name = scanner.nextLine().trim();
         Player p1 = name.isEmpty() ? new Player() : new Player(name);
 
         while (globalRunning) {
             if (i >= args.length){
-                System.out.println("Fin du jeu.");
+                System.out.println("\n╔══════════════════════════════╗");
+                System.out.println("║          FIN DU JEU          ║");
+                System.out.println("╚══════════════════════════════╝\n");
                 break;
             }
 
@@ -38,8 +40,12 @@ public class Main {
                 while (playing) {
                     System.out.println(lvl);
                     System.out.println(lvl.getPlayer());
-                    System.out.print("Action (Z/Q/S/D pour bouger, X pour quitter) : ");
-
+                    System.out.println("    ┌───┐");
+                    System.out.println("    │ Z │");
+                    System.out.println("┌───┼──┼────┐   ┌───┐");
+                    System.out.println("│ Q │ S │ D │   │ X │ Quitter");
+                    System.out.println("└───┴───┴───┘   └───┘");
+                    System.out.print("Action ➔ ");
                     String input = scanner.nextLine().toUpperCase();
                     if (input.isEmpty()) continue;
 
@@ -55,32 +61,40 @@ public class Main {
                         case 'S' -> lvl.movePlayer(Direction.BAS);
                         case 'Q' -> lvl.movePlayer(Direction.GAUCHE);
                         case 'D' -> lvl.movePlayer(Direction.DROITE);
-                        default -> System.out.println("Touche invalide.");
+                        default -> System.out.println("⚠ Touche invalide. Veuillez réessayer.");
                     }
                     if (lvl.getCoins() == 0) {
                         System.out.println(lvl);
-                        System.out.println("NIVEAU TERMINE");
+                        System.out.println("★━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━★");
+                        System.out.println("┃        NIVEAU TERMINÉ        ┃");
+                        System.out.println("★━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━★\n");
+                        System.out.println("★━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━★\n");
+                        System.out.println("★━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━★");
+                        System.out.println("┃        PROCHAIN NIVEAU       ┃");
+                        System.out.println("★━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━★\n");
                         i++;
                         playing = false;
                     }
                     if (p1.getHealth() == 0) {
-                        System.out.println("GAME OVER");
+                        System.out.println("\n☠️ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ☠️");
+                        System.out.println("┃          GAME OVER           ┃");
+                        System.out.println("☠️ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ☠️\n");
                         playing = false;
                     }
                 }
                 if (globalRunning && p1.getHealth()==0) {
-                    System.out.println("Voulez vous rejouer ? OUI : O (c la lettre pas un zéro^^)");
+                    System.out.println("❓ Voulez-vous rejouer ? [ O = Oui (c la lettre pas un zéro^^) / Autre touche = Non ] ➔ ");
                     String replay = scanner.nextLine().toUpperCase();
                     if (!replay.equals("O")) {
                         globalRunning = false;
-                        System.out.println("Merci d'avoir joué !");
+                        System.out.println("\n✨ Merci d'avoir joué ! ✨\n");
                     } else{
                         i = 0;
                         p1 = new Player(name);
                     }
                 }
             } catch (IOException e) {
-                System.err.println("Erreur : Impossible de lire le fichier " + args[i] + " .");
+                System.err.println("[X] ERREUR CRITIQUE : Impossible de lire le fichier -> " + args[i]);
                 return;
             }
         }

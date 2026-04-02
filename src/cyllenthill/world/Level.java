@@ -26,10 +26,11 @@ public class Level {
             for (int j = 0; j < width; j++){
                 char currentChar = line.charAt(j);
                 switch (currentChar){
-                    case ' ' -> this.matrix[i][j] = new Cell(i, j, false, CellType.VIDE);
-                    case '#' -> this.matrix[i][j] = new Cell(i, j, false, CellType.MUR);
-                    case '*' -> this.matrix[i][j] = new Cell(i, j, false, CellType.PIEGE);
-                    case '.' -> this.matrix[i][j] = new Cell(i, j, true, CellType.VIDE);
+                    case ' ' -> this.matrix[i][j] = new Cell(i, j, CellType.VIDE, false, false);
+                    case '#' -> this.matrix[i][j] = new Cell(i, j, CellType.MUR, false, true);
+                    case '*' -> this.matrix[i][j] = new Cell(i, j, CellType.PIEGE, false, false);
+                    case '.' -> this.matrix[i][j] = new Cell(i, j, CellType.VIDE, true, false);
+                    case 'D' -> this.matrix[i][j] = new Cell(i, j, CellType.PORTE, false, true);
                 }
             }
         }
@@ -71,8 +72,8 @@ public class Level {
     }
 
 
-    public static class PlayerOnWallException extends RuntimeException {
-        public PlayerOnWallException(String message) { super(message); }
+    public static class PlayerOnSolidException extends RuntimeException {
+        public PlayerOnSolidException(String message) { super(message); }
     }
 
     public static class PlayerOutOfBoundsException extends RuntimeException {
@@ -84,8 +85,8 @@ public class Level {
         if (row < 0 || row >= height || col < 0 || col >= width) {
             throw new PlayerOutOfBoundsException("Position (" + row + ", " + col + ") hors limites.");
         }
-        if (matrix[row][col].getType() == CellType.MUR) {
-            throw new PlayerOnWallException("Position (" + row + ", " + col + ") sur un mur.");
+        if (matrix[row][col].getisSolide()) {
+            throw new PlayerOnSolidException("Position (" + row + ", " + col + ") sur un mur ou une porte fermée.");
         }
         this.player = p;
         this.player.setxRow(row);
@@ -104,7 +105,7 @@ public class Level {
             case GAUCHE -> newCol--;
             case DROITE -> newCol++;
         }
-        if (newRow >= 0 && newRow < height && newCol >= 0 && newCol < width && matrix[newRow][newCol].getType() != CellType.MUR) {
+        if (newRow >= 0 && newRow < height && newCol >= 0 && newCol < width && !matrix[newRow][newCol].getisSolide()) {
             if (matrix[newRow][newCol].gethasCoin()){
                 player.setScore(10);
                 updateCoins(-1);
@@ -136,6 +137,7 @@ public class Level {
                         case MUR -> map.append('#');
                         case PIEGE -> map.append('*');
                         case VIDE -> map.append(' ');
+                        case PORTE -> map.append('D');
                     }
                 }
             }

@@ -24,7 +24,7 @@ public class Level {
         for (int i = 0; i < height; i++) {
             String line = lines.get(i);
             for (int j = 0; j < width; j++){
-                char currentChar = line.charAt(j);
+                char currentChar = (j < line.length()) ? line.charAt(j) : ' '; // https://pastebin.com/r3aZiH7a
                 switch (currentChar){
                     case ' ' -> this.matrix[i][j] = new Cell(i, j, CellType.VIDE, false, false);
                     case '#' -> this.matrix[i][j] = new Cell(i, j, CellType.MUR, false, true);
@@ -105,7 +105,9 @@ public class Level {
             case GAUCHE -> newCol--;
             case DROITE -> newCol++;
         }
-        if (newRow >= 0 && newRow < height && newCol >= 0 && newCol < width && !matrix[newRow][newCol].getisSolide()) {
+        newRow = (newRow + height) % height;
+        newCol = (newCol + width) % width;
+        if (!matrix[newRow][newCol].getisSolide()) {
             if (matrix[newRow][newCol].gethasCoin()){
                 player.setScore(10);
                 updateCoins(-1);

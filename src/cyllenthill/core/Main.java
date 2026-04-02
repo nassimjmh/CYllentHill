@@ -20,8 +20,8 @@ public class Main {
         int i = 0;
 
         System.out.println("Saisir le nom du joueur : ");
-        String name = scanner.nextLine();
-        Player p1 = new Player(name);
+        String name = scanner.nextLine().trim();
+        Player p1 = name.isEmpty() ? new Player() : new Player(name);
 
         while (globalRunning) {
             if (i >= args.length){

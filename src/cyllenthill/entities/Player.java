@@ -8,10 +8,12 @@ package cyllenthill.entities;
 public class Player {
     private final String name;
     private int score;
+    private int health;
     private static int count = 0;
     private int xRow;
     private int yCol;
-    private int health;
+    private int placeX;
+    private int placeY;
 
     /**
      * Player constructor with parameter
@@ -71,6 +73,14 @@ public class Player {
         return health;
     }
 
+    public int getPlaceX(){
+        return placeX;
+    }
+
+    public int getPlaceY(){
+        return placeY;
+    }
+
     /**
      * Cannot go negative
      * @param delta point to add or remove
@@ -87,6 +97,16 @@ public class Player {
     public void setyCol(int col){
         this.yCol = col;
     }
+
+    public void setHealth(int delta){
+        this.health = Math.max(this.health + delta,0);
+    }
+
+    public void setPlace(int placeX, int placeY){
+        this.placeX = placeX;
+        this.placeY = placeY;
+    }
+
 
     /**
      * Format : *Name* : *Score* pt(s)

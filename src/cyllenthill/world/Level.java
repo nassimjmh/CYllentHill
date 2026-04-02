@@ -115,12 +115,12 @@ public class Level {
                 player.setScore(10);
                 updateCoins(-1);
             }
-            /*if (matrix[newRow][newCol] ==  '*'){
-                player.setHealth(-1);
+            if (matrix[newRow][newCol] ==  '*'){
+                player.setHealth(-2);
                 matrix[newRow][newCol] = ' ';
                 newRow = player.getPlaceX();
                 newCol = player.getPlaceY();
-            }*/
+            }
 
 
             matrix[player.getxRow()][player.getyCol()] = ' ';

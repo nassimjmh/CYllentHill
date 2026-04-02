@@ -16,41 +16,62 @@ public class Main {
             return;
         }
         String path = args[0];
-        try {
-            Player p1 = new Player("Nassim");
-            Level lvl = new Level(path);
+        Scanner scanner = new Scanner(System.in);
+        boolean globalRunning = true;
+        while (globalRunning) {
+            try {
+                Player p1 = new Player("Nassim");
+                Level lvl = new Level(path);
+                p1.setPlace(5, 5);
+                lvl.placePlayer(p1, p1.getPlaceX(), p1.getPlaceY());
+                boolean playing = true;
 
-            lvl.placePlayer(p1, 5, 5);
+                while (playing) {
 
-            Scanner scanner = new Scanner(System.in);
-            boolean playing = true;
+                    System.out.println(lvl);
+                    System.out.println(lvl.getPlayer());
+                    System.out.print("Action (Z/Q/S/D pour bouger, X pour quitter) : ");
 
-            while (playing) {
-                System.out.println(lvl);
-                System.out.println(lvl.getPlayer());
-                System.out.print("Action (Z/Q/S/D pour bouger, X pour quitter) : ");
+                    String input = scanner.nextLine().toUpperCase();
+                    if (input.isEmpty()) continue;
 
-                String input = scanner.nextLine().toUpperCase();
-                if (input.isEmpty()) continue;
+                    char action = input.charAt(0);
 
-                char action = input.charAt(0);
-                switch (action) {
-                    case 'Z' -> lvl.movePlayer(Direction.HAUT);
-                    case 'S' -> lvl.movePlayer(Direction.BAS);
-                    case 'Q' -> lvl.movePlayer(Direction.GAUCHE);
-                    case 'D' -> lvl.movePlayer(Direction.DROITE);
-                    case 'X' -> playing = false;
-                    default -> System.out.println("Touche invalide.");
+                    if (action=='X'){
+                        playing = false;
+                        globalRunning = false;
+                        break;
+                    }
+                    switch (action) {
+                        case 'Z' -> lvl.movePlayer(Direction.HAUT);
+                        case 'S' -> lvl.movePlayer(Direction.BAS);
+                        case 'Q' -> lvl.movePlayer(Direction.GAUCHE);
+                        case 'D' -> lvl.movePlayer(Direction.DROITE);
+                        default -> System.out.println("Touche invalide.");
+                    }
+                    if (lvl.getCoins() == 0) {
+                        System.out.println(lvl);
+                        System.out.println("NIVEAU TERMINE");
+                        playing = false;
+                    }
+                    if (p1.getHealth() == 0) {
+                        System.out.println("GAME OVER");
+                        playing = false;
+                    }
                 }
-                if (lvl.getCoins()==0){
-                    playing = false;
-                    System.out.println("NIVEAU TERMINE");
+                if (globalRunning){
+                    System.out.println("Voulez vous rejouer ? OUI : O (c la lettre pas un zéro^^)");
+                    String replay = scanner.nextLine().toUpperCase();
+                    if (!replay.equals("O")) {
+                        globalRunning = false;
+                        System.out.println("Merci d'avoir joué !");
+                    }
                 }
+            } catch (IOException e) {
+                System.err.println("Erreur : Impossible de lire le fichier '" + path + "'.");
+                return;
             }
-            scanner.close();
-        } catch (IOException e) {
-            System.err.println("Erreur : Impossible de lire le fichier '" + path + "'.");
-            return;
         }
+        scanner.close();
     }
 }

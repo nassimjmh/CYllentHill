@@ -1,5 +1,6 @@
 package cyllenthill.world;
 
+import cyllenthill.entities.Enemy;
 import cyllenthill.entities.Player;
 import cyllenthill.world.Direction;
 
@@ -14,6 +15,7 @@ public class Level {
     private final int width;
     private Cell[][] matrix;
     private Player player;
+    private Enemy enemy;
     private int coins;
 
     public Level(String filename) throws IOException {
@@ -72,25 +74,38 @@ public class Level {
     }
 
 
-    public static class PlayerOnSolidException extends RuntimeException {
-        public PlayerOnSolidException(String message) { super(message); }
+    public static class EntityOnSolidException extends RuntimeException {
+        public EntityOnSolidException(String message) { super(message); }
     }
 
-    public static class PlayerOutOfBoundsException extends RuntimeException {
-        public PlayerOutOfBoundsException(String message) { super(message); }
+    public static class EntityOutOfBoundsException extends RuntimeException {
+        public EntityOutOfBoundsException(String message) { super(message); }
     }
+
 
 
     public void placePlayer(Player p, int row, int col) {
         if (row < 0 || row >= height || col < 0 || col >= width) {
-            throw new PlayerOutOfBoundsException("Position (" + row + ", " + col + ") hors limites.");
+            throw new EntityOutOfBoundsException("Position (" + row + ", " + col + ") hors limites.");
         }
         if (matrix[row][col].getisSolide()) {
-            throw new PlayerOnSolidException("Position (" + row + ", " + col + ") sur un mur ou une porte fermée.");
+            throw new EntityOnSolidException("Position (" + row + ", " + col + ") sur un mur ou une porte fermée.");
         }
         this.player = p;
         this.player.setxRow(row);
         this.player.setyCol(col);
+    }
+
+    public void placeEnemy(Enemy enemy, int row, int col){
+        if (row < 0 || row >= height || col < 0 || col >= width) {
+            throw new EntityOutOfBoundsException("Position (" + row + ", " + col + ") hors limites.");
+        }
+        if (matrix[row][col].getisSolide()) {
+            throw new EntityOnSolidException("Position (" + row + ", " + col + ") sur un mur ou une porte fermée.");
+        }
+        this.enemy = enemy;
+        this.enemy.setxRow(row);
+        this.enemy.setyCol(col);
     }
 
     public void movePlayer(Direction d){

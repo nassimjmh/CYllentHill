@@ -40,11 +40,7 @@ public class Main {
                 while (playing) {
                     System.out.println(lvl);
                     System.out.println(lvl.getPlayer());
-                    System.out.println("    ┌───┐");
-                    System.out.println("    │ Z │");
-                    System.out.println("┌───┼──┼────┐   ┌───┐");
-                    System.out.println("│ Q │ S │ D │   │ X │ Quitter");
-                    System.out.println("└───┴───┴───┘   └───┘");
+                    System.out.println("⚡ [ Z/Q/S/D : Bouger | X : Quitter ]");
                     System.out.print("Action ➔ ");
                     String input = scanner.nextLine().toUpperCase();
                     if (input.isEmpty()) continue;

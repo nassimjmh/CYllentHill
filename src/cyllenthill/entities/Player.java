@@ -5,15 +5,9 @@ package cyllenthill.entities;
  *
  * @author nassimjmh
  */
-public class Player {
-    private final String name;
+public class Player extends Entity {
     private int score;
-    private int health;
     private static int count = 0;
-    private int xRow;
-    private int yCol;
-    private int placeX;
-    private int placeY;
 
     /**
      * Player constructor with parameter
@@ -22,9 +16,8 @@ public class Player {
      * @param name The name of the player
      */
     public Player(String name) {
-        this.name = name;
+        super(name,5);
         this.score = 0;
-        this.health = 5;
         count++;
     }
 
@@ -37,21 +30,6 @@ public class Player {
         this("Player" + (count + 1));
     }
 
-    /**
-     * Get number of players created
-     * @return positive int
-     */
-    public static int getCount(){
-        return count;
-    }
-
-    /**
-     *
-     * @return player name
-     */
-    public String getName() {
-        return name;
-    }
 
     /**
      *
@@ -61,24 +39,12 @@ public class Player {
         return score;
     }
 
-    public int getxRow(){
-        return xRow;
-    }
-
-    public int getyCol(){
-        return yCol;
-    }
-
-    public int getHealth(){
-        return health;
-    }
-
-    public int getPlaceX(){
-        return placeX;
-    }
-
-    public int getPlaceY(){
-        return placeY;
+    /**
+     * Get number of players created
+     * @return positive int
+     */
+    public static int getCount(){
+        return count;
     }
 
     /**
@@ -88,23 +54,6 @@ public class Player {
      */
     public void setScore(int delta) {
         this.score = Math.max(this.score + delta, 0); // score >= 0
-    }
-
-    public void setxRow(int row){
-        this.xRow = row;
-    }
-
-    public void setyCol(int col){
-        this.yCol = col;
-    }
-
-    public void setHealth(int delta){
-        this.health = Math.max(this.health + delta,0);
-    }
-
-    public void setPlace(int placeX, int placeY){
-        this.placeX = placeX;
-        this.placeY = placeY;
     }
 
 

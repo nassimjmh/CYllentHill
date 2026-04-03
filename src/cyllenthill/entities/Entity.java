@@ -8,7 +8,56 @@ public class Entity {
     protected int placeX;
     protected int placeY;
 
-    public Entity(String name){
+    public Entity(String name, int health){
         this.name = name;
+        this.health = health;
     }
+
+    /**
+     *
+     * @return entity name
+     */
+    public String getName() {
+        return name;
+    }
+
+
+    public int getHealth(){
+        return health;
+    }
+
+    public int getxRow(){
+        return xRow;
+    }
+
+    public int getyCol(){
+        return yCol;
+    }
+
+    public int getPlaceX(){
+        return placeX;
+    }
+
+    public int getPlaceY(){
+        return placeY;
+    }
+
+    public void setHealth(int delta){
+        this.health = Math.max(this.health + delta,0);
+    }
+
+    public void setxRow(int row){
+        this.xRow = row;
+    }
+
+    public void setyCol(int col){
+        this.yCol = col;
+    }
+
+
+    public void setPlace(int placeX, int placeY){
+        this.placeX = placeX;
+        this.placeY = placeY;
+    }
+
 }

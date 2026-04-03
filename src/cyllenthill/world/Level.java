@@ -140,6 +140,31 @@ public class Level {
 
     }
 
+    public void moveEnemy(){
+
+        int newRow = this.enemy.getxRow();
+        int newCol = this.enemy.getyCol();
+
+        do{
+            newRow = this.enemy.getxRow();
+            newCol = this.enemy.getyCol();
+            int direction = (int)(Math.random() * 4);
+            switch (direction){
+                case 0 -> newRow--;
+                case 1 -> newRow++;
+                case 2 -> newCol--;
+                case 3 -> newCol++;
+            }
+            newRow = (newRow + height) % height;
+            newCol = (newCol + width) % width;
+        } while (matrix[newRow][newCol].getisSolide() || matrix[newRow][newCol].getType() == CellType.PIEGE);
+
+
+        enemy.setxRow(newRow);
+        enemy.setyCol(newCol);
+
+    }
+
     @Override
     public String toString() {
         StringBuilder map = new StringBuilder();
@@ -147,6 +172,8 @@ public class Level {
             for (int j = 0; j < width; j++) {
                 if (player != null && i == player.getxRow() && j == player.getyCol()) {
                     map.append('1');
+                } else if (enemy != null && i == enemy.getxRow() && j == enemy.getyCol()) {
+                    map.append('R');
                 } else if (matrix[i][j].gethasCoin()) {
                     map.append('.');
                 } else {

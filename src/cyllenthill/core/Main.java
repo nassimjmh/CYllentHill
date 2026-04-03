@@ -1,5 +1,6 @@
 package cyllenthill.core;
 
+import cyllenthill.entities.Enemy;
 import cyllenthill.entities.Player;
 import cyllenthill.world.Level;
 import cyllenthill.world.Direction;
@@ -35,6 +36,8 @@ public class Main {
                 Level lvl = new Level(args[i]);
                 p1.setPlace(5, 5);
                 lvl.placePlayer(p1, p1.getPlaceX(), p1.getPlaceY());
+                Enemy enemy = new Enemy("Yahu");
+                lvl.placeEnemy(enemy,5,8);
                 boolean playing = true;
 
                 while (playing) {
@@ -59,6 +62,7 @@ public class Main {
                         case 'D' -> lvl.movePlayer(Direction.DROITE);
                         default -> System.out.println("⚠ Touche invalide. Veuillez réessayer.");
                     }
+                    lvl.moveEnemy();
                     if (lvl.getCoins() == 0) {
                         System.out.println(lvl);
                         System.out.println("★━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━★");

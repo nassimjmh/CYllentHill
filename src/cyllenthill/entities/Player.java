@@ -16,7 +16,7 @@ public class Player extends Entity {
      * @param name The name of the player
      */
     public Player(String name) {
-        super(name,5);
+        super(name, 5);
         this.score = 0;
         count++;
     }
@@ -41,14 +41,16 @@ public class Player extends Entity {
 
     /**
      * Get number of players created
+     *
      * @return positive int
      */
-    public static int getCount(){
+    public static int getCount() {
         return count;
     }
 
     /**
      * Cannot go negative
+     *
      * @param delta point to add or remove
      *
      */
@@ -59,24 +61,11 @@ public class Player extends Entity {
 
     /**
      * Format : *Name* : *Score* pt(s)
+     *
      * @return Formatted String
      */
     @Override
     public String toString() {
         return "👤 " + this.getName() + " | " + "❤️".repeat(Math.min(5, Math.max(0, getHealth()))) + " | 🏆 " + this.getScore() + " pt" + (this.getScore() > 1 ? "s" : "") + " | 📍 (" + this.getxRow() + ", " + this.getyCol() + ")";
     }
-
-    /**
-     * Compare only names ignoring case
-     * @param obj the reference object with which to compare.
-     * @return boolean whether object are equal or not
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || this.getClass() != obj.getClass()) return false;
-        Player other = (Player) obj;
-        return this.name.equalsIgnoreCase(other.name);
-    }
-
 }

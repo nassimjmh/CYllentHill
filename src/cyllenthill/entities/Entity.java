@@ -1,6 +1,6 @@
 package cyllenthill.entities;
 
-public class Entity {
+public abstract class Entity {
     protected final String name;
     protected int health;
     protected int xRow;
@@ -60,4 +60,16 @@ public class Entity {
         this.placeY = placeY;
     }
 
+    /**
+     * Compare only names ignoring case
+     * @param obj the reference object with which to compare.
+     * @return boolean whether object are equal or not
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
+        Entity other = (Entity) obj;
+        return this.name.equalsIgnoreCase(other.name);
+    }
 }

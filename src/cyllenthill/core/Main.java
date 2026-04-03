@@ -35,9 +35,8 @@ public class Main {
             try {
                 Level lvl = new Level(args[i]);
                 p1.setPlace(5, 5);
-                lvl.placePlayer(p1, p1.getPlaceX(), p1.getPlaceY());
+                lvl.place(p1, p1.getPlaceX(), p1.getPlaceY());
                 Enemy enemy = new Enemy("Yahu");
-                lvl.placeEnemy(enemy,5,8);
                 boolean playing = true;
 
                 while (playing) {

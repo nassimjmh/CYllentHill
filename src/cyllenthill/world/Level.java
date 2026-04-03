@@ -33,6 +33,11 @@ public class Level {
                     case '*' -> this.matrix[i][j] = new Cell(i, j, CellType.PIEGE, false, false);
                     case '.' -> this.matrix[i][j] = new Cell(i, j, CellType.VIDE, true, false);
                     case 'D' -> this.matrix[i][j] = new Cell(i, j, CellType.PORTE, false, true);
+                    case 'R' -> {
+                        this.matrix[i][j] = new Cell(i, j, CellType.VIDE, false, false);
+                        this.enemy = new Enemy("Yahu");
+                        this.place(enemy, i, j);
+                    }
                 }
             }
         }
@@ -84,7 +89,7 @@ public class Level {
 
 
 
-    public void placePlayer(Player p, int row, int col) {
+    public void place(Player p, int row, int col) {
         if (row < 0 || row >= height || col < 0 || col >= width) {
             throw new EntityOutOfBoundsException("Position (" + row + ", " + col + ") hors limites.");
         }
@@ -96,14 +101,14 @@ public class Level {
         this.player.setyCol(col);
     }
 
-    public void placeEnemy(Enemy enemy, int row, int col){
+    public void place(Enemy e, int row, int col){
         if (row < 0 || row >= height || col < 0 || col >= width) {
             throw new EntityOutOfBoundsException("Position (" + row + ", " + col + ") hors limites.");
         }
         if (matrix[row][col].getisSolide()) {
             throw new EntityOnSolidException("Position (" + row + ", " + col + ") sur un mur ou une porte fermée.");
         }
-        this.enemy = enemy;
+        this.enemy = e;
         this.enemy.setxRow(row);
         this.enemy.setyCol(col);
     }
@@ -144,11 +149,12 @@ public class Level {
 
         int newRow = this.enemy.getxRow();
         int newCol = this.enemy.getyCol();
-
+        int attempts = 0;
         do{
             newRow = this.enemy.getxRow();
             newCol = this.enemy.getyCol();
             int direction = (int)(Math.random() * 4);
+            attempts++;
             switch (direction){
                 case 0 -> newRow--;
                 case 1 -> newRow++;
@@ -157,7 +163,7 @@ public class Level {
             }
             newRow = (newRow + height) % height;
             newCol = (newCol + width) % width;
-        } while (matrix[newRow][newCol].getisSolide() || matrix[newRow][newCol].getType() == CellType.PIEGE);
+        } while ((matrix[newRow][newCol].getisSolide() || matrix[newRow][newCol].getType() == CellType.PIEGE ) && attempts<10 ) ;
 
 
         enemy.setxRow(newRow);
